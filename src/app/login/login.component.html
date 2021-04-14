@@ -1,0 +1,38 @@
+<div id="login-container">
+<mat-card class="login-form-card">
+  <mat-card-title>SnO Admin Panel</mat-card-title>
+<form class="login-form" #loginForm="ngForm">  
+  
+  <!--Login id -->
+  <mat-form-field>
+    <mat-label>Username</mat-label>
+    <input matInput
+	   placeholder="Username"
+	   [(ngModel)]="user.name"
+	   name="name"
+	   >
+  </mat-form-field>
+
+  <!-- Password -->
+  <mat-form-field>
+    <mat-label>Password</mat-label>
+    <input matInput
+	   placeholder="Password"
+	   [(ngModel)]="user.password"
+	   name="password"
+	   >
+  </mat-form-field>
+
+  <!--Login Button -->
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="onSubmitLogin()"
+    >
+    Login
+  </button>
+  
+</form>
+
+</mat-card>
+</div>

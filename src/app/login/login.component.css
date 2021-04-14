@@ -1,0 +1,15 @@
+#login-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+mat-card{
+    min-width: 20em;
+}
+
+.login-form{
+    display:flex;
+    flex-direction: column;
+}
