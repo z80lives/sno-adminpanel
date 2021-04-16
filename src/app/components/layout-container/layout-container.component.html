@@ -1,0 +1,30 @@
+
+<!--show everything in this div if user is logged in>-->
+<div  *ngIf="isLoggedIn()" id="auth-layout-container">    
+  <!--this one's the title toolbar-->
+  <app-title-toolbar
+    (sideMenuToggle)="toggleSideMenu($event)"
+    >
+  </app-title-toolbar>
+
+  <!--the drawer and sidemenu layout -->
+  <mat-drawer-container class="drawer-container">
+    <!--Drawer -->
+    <mat-drawer #drawer mode="side" opened class="drawer">
+      <!-- sidebar.component -->
+      <app-sidebar></app-sidebar>
+    </mat-drawer>
+
+    <!--main content; displays the component of the route-->
+    <mat-drawer-content class="main-content">
+      <router-outlet></router-outlet>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</div>
+
+<!--
+  otherwise just show the child routes. 
+  Login screen and other public routes are 
+  displayed here
+-->
+<router-outlet *ngIf="!isLoggedIn()"></router-outlet>
