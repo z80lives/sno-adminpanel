@@ -6,6 +6,7 @@
   <mat-card-content>
     <p *ngIf="isLoading">Loading..</p>
 
+    <div *ngIf="!isLoading">
     <table mat-table [dataSource]="dataSource" >
 
       <!--name column -->
@@ -30,8 +31,12 @@
 	<td class="mat-cell" colspan="4">No data</td>
       </tr>
     </table>
+    </div> 
 
-
+    <!--add button -->
+    <button mat-fab class="fab-bottom-right" (click)="onClickAdd()">
+      <mat-icon>add</mat-icon>
+    </button>
     
   </mat-card-content>
 </mat-card>

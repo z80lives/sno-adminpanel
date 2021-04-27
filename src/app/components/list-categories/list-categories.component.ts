@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Router } from "@angular/router";
 import { CategoryService } from "../../services/category.service";
-
 import { Category } from "../../models/category";
 
 @Component({
@@ -15,7 +14,9 @@ export class ListCategoriesComponent implements OnInit {
     displayed_columns : string[] = ["name"];
     dataSource : Category[] = [];
 
-    constructor(public categoryAPI : CategoryService) { }
+    constructor(public categoryAPI : CategoryService,
+		public router : Router
+	       ) { }
 
     getData(){
 	this.categoryAPI.fetchAll().subscribe( results => {
@@ -27,9 +28,12 @@ export class ListCategoriesComponent implements OnInit {
 	})
     }
 
-  ngOnInit(): void {
-      this.getData();
-  }
+    ngOnInit(): void {
+	this.getData();
+    }
 
-
+    onClickAdd(){
+	this.router.navigate(["category", "new"]);
+    }
+    
 }

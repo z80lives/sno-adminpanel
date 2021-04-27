@@ -1,0 +1,23 @@
+<app-head-card
+  [showToolbar]="true"
+  (editAction)="onClickEdit($event)"
+  ></app-head-card>
+<p *ngIf="isLoading">Loading...</p>
+<mat-card *ngIf="!isLoading">
+  <mat-card-header>
+    <mat-card-title>{{product.name}}</mat-card-title>
+  </mat-card-header>
+    <img mat-card-image src="{{pictureUrl}}">    
+  <mat-card-content>
+    <h3>Brand</h3>
+    <ul *ngIf="product.brand">
+      <li>Name: {{product.brand.name}}</li>
+      <li>Origin: {{product.brand.origin}}</li>       
+    </ul>
+    <h3>Category</h3>
+    <ul *ngIf="product.category">
+      <li>Name: {{product.category.name}} </li>      
+    </ul>
+    <!--<p><b>Number of Products: {{product.product_count}} </b></p>-->
+  </mat-card-content>
+</mat-card>

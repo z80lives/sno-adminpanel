@@ -1,0 +1,38 @@
+<app-head-card></app-head-card>
+
+<mat-card *ngIf="hasLoaded">
+  <mat-card-title> {{submitButtonLabel}} Brand </mat-card-title>
+
+  <mat-card-content>
+  <div id="form-container" >
+  <form class="standard-form" #brandForm="ngForm">
+    <!-- brand name -->
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput	     
+	     placeholder="Brand Name"
+	     [(ngModel)]="brand.name"
+	     name="name"
+	     >      
+    </mat-form-field>
+
+    <!--brand origin -->
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput	     
+	     placeholder="Brand Origin"
+	     [(ngModel)]="brand.origin"
+	     name="origin"
+	     >      
+    </mat-form-field>
+
+    
+    <button mat-raised-button
+	    color="primary"
+	    (click)="onSubmitButton()">
+      {{submitButtonLabel}}
+    </button>
+  </form>
+  </div>
+  </mat-card-content>
+</mat-card>

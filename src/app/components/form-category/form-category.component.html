@@ -1,0 +1,32 @@
+<app-head-card></app-head-card>
+
+<mat-card *ngIf="hasLoaded">
+  <mat-card-title> {{submitButtonLabel}} Category </mat-card-title>
+
+  <mat-card-content>
+  <div id="form-container" >
+  <form class="standard-form" #categoryForm="ngForm">
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput
+	     placeholder="Category Name"
+	     [(ngModel)]="category.name"
+	     name="name"
+	     >      
+    </mat-form-field>
+
+    <app-image-uploader
+      (getSelectedFile)="onImageFileUpload($event)"
+      [initImage]="imgsrc"
+      >
+    </app-image-uploader>    
+    
+    <button mat-raised-button
+	    color="primary"
+	    (click)="onSubmitButton()">
+      {{submitButtonLabel}}
+    </button>
+  </form>
+  </div>
+  </mat-card-content>
+</mat-card>

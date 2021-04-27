@@ -1,0 +1,14 @@
+#form-container{
+    display: flex;
+    align-items: center;
+    /*justify-content: center;*/
+    margin-left: 2em;
+    height: 100%;
+    padding:2em;
+}
+
+
+.standard-form{
+    display: flex;
+    flex-direction: column;
+}

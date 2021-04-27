@@ -1,0 +1,12 @@
+<div style="display:none;">
+<input type="file" #pictureFile (change)="handleFileSelect($event)" hidden>
+</div>
+
+
+<img *ngIf="imgData!=null" src={{imgData}}
+     width="320"
+     height="200"
+     >
+    <button mat-raised-button color="secondary" (click)="pictureFile.click()">Choose file</button>
+
+  <p><b *ngIf="fileName">Filename:</b><span>{{fileName || "No file uploaded" }}</span></p>

@@ -5,5 +5,9 @@
 export interface Category{
     _id: string;
     name: string;
-    url: string;
+    url?: string | undefined ;
+    picture?: {
+	_id: string;
+    };
+    product_count?: number ;
 }

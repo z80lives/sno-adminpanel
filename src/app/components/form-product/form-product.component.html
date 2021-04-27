@@ -1,0 +1,94 @@
+<app-head-card></app-head-card>
+
+<mat-card *ngIf="hasLoaded">
+    <mat-card-title> {{submitButtonLabel}} Product </mat-card-title>
+
+    <mat-card-content>
+	<div id="form-container" >
+	    <form class="standard-form" #productForm="ngForm">
+		<!--product name -->
+		<mat-form-field>
+		    <mat-label>Name</mat-label>
+		    <input matInput
+			   placeholder="Product Name"
+			   [(ngModel)]="product.name"
+			   name="name"
+		    >      
+		</mat-form-field>
+
+
+		<!--product packaging -->
+		<mat-form-field>
+		    <mat-label>Packaging</mat-label>
+		    <input matInput
+			   placeholder="Packaging (weight or dimensions)"
+			   [(ngModel)]="product.packaging"
+			   name="packaging"
+		    >      
+		</mat-form-field>
+
+		<h3> Brand</h3>
+		<p *ngIf="!this.brands">Loading</p>
+		<div *ngIf="this.brands">
+		    <mat-form-field>
+			<mat-select placeholder="Please select a brand"
+				    [(ngModel)]="selected_brand"
+				    name="brand"		  
+			>
+			    <mat-option>
+				<ngx-mat-select-search
+				    name="filterBrand"
+				    placeholderLabel="Search Brand"
+				    noEntriesFoundLabel = "No entries found"
+				    ngModel
+				    (ngModelChange)="filterBrand($event)"></ngx-mat-select-search>
+			    </mat-option>
+			    <mat-option *ngFor="let brand of filtered_brands"
+					[value]="brand._id">{{brand.name}} ({{brand.origin}})</mat-option>
+			</mat-select>
+		    </mat-form-field>
+		</div>
+		
+		<h3> Category</h3>
+		<p *ngIf="!categories">Loading</p>
+
+		<!--Category selector --> 
+		<div *ngIf="categories">
+		    <mat-form-field>
+			<mat-select placeholder="Please select a category"
+				    [(ngModel)]="selected_category"
+				    name="category"		  
+				    #singleSelect
+			>
+			    <mat-option>
+				<ngx-mat-select-search
+				    name="filterCategory"
+				    placeholderLabel="Search Categories"
+				    noEntriesFoundLabel = "No entries found"
+				    ngModel
+				    (ngModelChange)="filterCategory($event)"></ngx-mat-select-search>
+			    </mat-option>
+			    <mat-option *ngFor="let category of filtered_categories"
+					[value]="category._id">{{category.name}}</mat-option>
+			</mat-select>
+		    </mat-form-field>
+		</div>
+
+		<h3> Image </h3>
+		
+		<!--product image -->
+		<app-image-uploader
+		    (getSelectedFile)="onImageFileUpload($event)"
+		    [initImage]="imgsrc"
+		>
+		</app-image-uploader>    
+		
+		<button mat-raised-button
+			color="primary"
+			(click)="onSubmitButton()">
+		    {{submitButtonLabel}}
+		</button>
+	    </form>
+	</div>
+    </mat-card-content>
+</mat-card>

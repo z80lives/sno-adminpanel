@@ -1,0 +1,17 @@
+.menu-container{
+    display: flex;
+    margin:  1.1em;
+    padding: 0.2em;
+}
+
+.space-span{
+    flex: 1 1 auto;    
+}
+
+#toolbar{
+    margin-left: 2em;
+}
+
+#toolbar > button{
+    margin: 2px;
+}

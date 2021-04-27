@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from "@angular/router";
+import { BrandService } from "../../services/brand.service";
+import { Brand } from "../../models/brand";
 
 @Component({
   selector: 'app-list-brands',
@@ -6,10 +9,31 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./list-brands.component.css']
 })
 export class ListBrandsComponent implements OnInit {
+    isLoading : boolean = true;
+    dataSource: Brand[]=[];    
+    displayed_columns : string[] = ["name", "origin"];
+    
+    constructor(public brandService : BrandService,
+		public router: Router
+	       ) { }
 
-  constructor() { }
 
-  ngOnInit(): void {
-  }
+    getData(){
+	this.brandService.fetchAll().subscribe( results => {
+	    this.dataSource = results.data;
+	}, fail => {
 
+	}, () => {
+	    this.isLoading = false;
+	});
+    }
+
+    ngOnInit(): void {
+	this.getData();
+    }
+
+    
+    onClickAdd(){
+	this.router.navigate(["brand", "new"]);
+    }
 }

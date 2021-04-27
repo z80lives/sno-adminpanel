@@ -1,0 +1,28 @@
+<mat-card>
+  <div class="menu-container">
+    <button mat-icon-button
+	    mat-raised-button
+	    (click)="onClickBack()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+
+    <span class="space-span"></span>
+  <!--tool menu edit/delete and download -->
+  <div *ngIf="showToolbar" id="toolbar">
+    <button
+      mat-icon-button
+      mat-raised-button
+      (click)="editAction.emit($event)" >
+      <mat-icon>edit</mat-icon>
+    </button>
+
+    <button
+      mat-icon-button
+      mat-raised-button
+      (click)="deleteAction.emit($event)" >
+      <mat-icon>delete</mat-icon>
+    </button>
+    
+  </div>
+  </div>
+</mat-card>
