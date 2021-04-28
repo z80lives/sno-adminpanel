@@ -70,8 +70,7 @@ export class ProductService {
 	const pic_id = data.picture? data.picture._id : "";
 
 	if(file !== undefined){
-	    console.log("Update with file");
-	    return procResult();
+	    return this.imageService.afterUpload(file, procResult, pic_id);
 	}else{
 	    return procResult();
 	}

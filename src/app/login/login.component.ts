@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit{
 	name: "",
 	password: "" 
     };
+    errorMsg : string = "test alert";
 
     constructor(public auth: AuthService,
 		public router: Router
@@ -46,11 +47,18 @@ export class LoginComponent implements OnInit{
 		
 		//login failed			
 		error => {
-		    if(error.error.message){
-			console.log("Error: ", error.error.message);
+		    var msg = "Unable to login: ";
+		    if(error.error){
+			if(error.error.message){
+			    msg += error.error.message;
+			}else{
+			    msg += "Server did not return error";
+			}
 		    }else{
-			console.log("Unkown error");
+			msg += "Reason unknown";		
 		    }
+
+		    this.errorMsg = msg;
 		});
     }
 }

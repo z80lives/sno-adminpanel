@@ -8,6 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 //background services
 //import { ImageService } from "./services/image.service";
+import { RefreshTokenInterceptorInterceptor } from "./refresh-token-interceptor.interceptor";
 
 
 //Angular Materials modules
@@ -25,7 +26,9 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 
 //other modules
 import {FormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
+import { HttpClientModule,
+	 HTTP_INTERCEPTORS
+       } from "@angular/common/http";
 import { JwtModule } from '@auth0/angular-jwt';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -52,6 +55,7 @@ import { FormBrandComponent } from './components/form-brand/form-brand.component
 import { ProductComponent } from './components/product/product.component';
 import { FormProductComponent } from './components/form-product/form-product.component';
 import { FilterSelectComponent } from './components/filter-select/filter-select.component';
+import { AlertBoxComponent } from './components/alert-box/alert-box.component';
 
 
 @NgModule({
@@ -77,7 +81,8 @@ import { FilterSelectComponent } from './components/filter-select/filter-select.
       FormBrandComponent,
       ProductComponent,
       FormProductComponent,
-      FilterSelectComponent      
+      FilterSelectComponent,
+      AlertBoxComponent      
   ],
   imports: [
       AppRoutingModule,
@@ -111,7 +116,13 @@ import { FilterSelectComponent } from './components/filter-select/filter-select.
       NgxMatSelectSearchModule,
       ReactiveFormsModule
   ],
-  providers: [],
+    providers: [
+	{
+	    provide: HTTP_INTERCEPTORS,
+	    useClass: RefreshTokenInterceptorInterceptor,
+	    multi: true
+	}
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
