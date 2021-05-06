@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit{
 	name: "",
 	password: "" 
     };
-    errorMsg : string = "test alert";
+    errorMsg : string = "";
 
     constructor(public auth: AuthService,
 		public router: Router

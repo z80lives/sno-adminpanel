@@ -127,40 +127,40 @@ export class FormProductComponent implements OnInit {
 				       inputData
 				      )
 		.subscribe( results => {
-		    console.log("Successfully updated");
+		    this.router.navigate(["product", this.product._id], {replaceUrl: true});
 		}, fail => {
-		    console.error("Failed to update product", fail);
+		    var errorMsg = "Failed to update product";
+
+		    if(fail.error){
+			const code = fail.error.error.code
+			if(code == "ER_DUP_ENTRY"){
+			    errorMsg = `A product with name ${this.product.name} already exists`;
+			}
+		    }
+		    alert(errorMsg);
+		    console.error("Failed to create product", fail);
 		}, () => {
 		    console.log("Done");
 		});
-	    /*
-	    this.productService.update(this.pictureFile, {
-		...this.product
-	    }).subscribe( result => {
-		console.log("Update success");
-	    }, fail => {
-		var errorMsg = "Failed to change product";
-		if(fail.error){
-		    const code = fail.error.error.code
-		    if(code == "ER_DUP_ENTRY"){
-			errorMsg = `A product with name ${this.product.name} already exists`;
-		    }
-		}
-		alert(errorMsg);
-	    }, () => {
-		console.log("Done");
-	    });*/
 	}else{
-
-	    /*
+	    delete inputData._id;
 	    this.productService.create({
-		name: this.product.name,
+		...inputData,
 		file: this.pictureFile
-	    }).subscribe( result => {
-		console.log("Result", result);
-	    }, err => {
-		console.log("error", err);
-	    });*/
+	    })
+		.subscribe( result => {
+		    this.router.navigate(["product", result.data._id], {replaceUrl: true});
+		}, fail => {
+		    var errorMsg = "Failed to create product";
+
+		    if(fail.error){
+			const code = fail.error.error.code
+			if(code == "ER_DUP_ENTRY"){
+			    errorMsg = `A product with name ${this.product.name} already exists`;
+			}
+		    }
+		    console.log("error", fail);
+		});
 	}
     }
 

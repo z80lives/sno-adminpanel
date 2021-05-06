@@ -12,6 +12,11 @@ interface BrandResponse{
     data: Brand;
 }
 
+interface BrandCreateResponse{
+    _id: string;
+    message: string;
+}
+
 interface BrandData{
     id?: string;
     name: string;
@@ -38,7 +43,7 @@ export class BrandService {
     create(data : BrandData){
 	const {name, origin} = data;
 
-	return this.http.post("/api/admin/brand", {
+	return this.http.post<BrandCreateResponse>("/api/admin/brand", {
 	    name,
 	    origin
 	});

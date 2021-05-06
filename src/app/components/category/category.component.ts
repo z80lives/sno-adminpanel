@@ -13,6 +13,7 @@ export class CategoryComponent implements OnInit {
     isLoading = true;
     category_id : string | null = null;
     pictureUrl : string = "#";
+    reloadImage = false;
     category!: Category;
 
     constructor( public categoryService : CategoryService,
@@ -21,17 +22,22 @@ export class CategoryComponent implements OnInit {
 		 public imageService : ImageService
 	       ) {
 	this.category_id = route.snapshot.paramMap.get("id");
+	this.reloadImage = this.categoryService.getPictureRefresh();
     }
 
+    getPicture(){	
+	if(this.category.picture){
+	    console.log("reload image", this.reloadImage);
+	    this.pictureUrl = this.imageService.getImageUrl(this.category.picture._id, true);
+	}
+    }
 
     getData(){
 	if(this.category_id){
 	    this.categoryService
 		.fetch(this.category_id).subscribe( results =>{
 		    this.category = results.data;
-		    if(this.category.picture){
-			this.pictureUrl = this.imageService.getImageUrl(this.category.picture._id);
-		    }
+		    this.getPicture();
 		}, fail => {
 
 		}, () => {
@@ -43,6 +49,11 @@ export class CategoryComponent implements OnInit {
     
     ngOnInit(): void {
 	this.getData();
+	//this.getPicture();
+	this.categoryService.onPictureChange()
+	    .subscribe( () => {		
+		this.reloadImage = true;
+	    });
     }
 
     onClickEdit(event: any){

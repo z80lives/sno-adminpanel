@@ -2,7 +2,6 @@
 <mat-card class="login-form-card">
   <mat-card-title>SnO Admin Panel</mat-card-title>
 <form class="login-form" #loginForm="ngForm">  
-  <div class="alert">{{errorMsg}}</div>
   
   <!--Login id -->
   <mat-form-field>
@@ -34,6 +33,7 @@
     Login
   </button>
   
+  <alert-box type="error" *ngIf="errorMsg.length>0">{{errorMsg}}</alert-box>
 </form>
 
 </mat-card>

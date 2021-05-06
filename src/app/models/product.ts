@@ -12,4 +12,5 @@ export interface Product{
     category?: Category;
     url?: string;
     pic?: string;
+    fileExists?: boolean;
 };

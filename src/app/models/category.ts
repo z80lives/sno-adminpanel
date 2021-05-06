@@ -6,6 +6,7 @@ export interface Category{
     _id: string;
     name: string;
     url?: string | undefined ;
+    fileExists?: string;
     picture?: {
 	_id: string;
     };

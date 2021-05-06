@@ -5,6 +5,10 @@ import { Category } from "../../models/category";
 import { CategoryService } from "../../services/category.service";
 import { ImageService } from "../../services/image.service";
 
+import { MatDialog } from '@angular/material/dialog';
+import { DialogConfirmComponent } from "../dialog-confirm/dialog-confirm.component";
+import {Location} from '@angular/common';
+
 @Component({
   selector: 'app-form-category',
   templateUrl: './form-category.component.html',
@@ -22,10 +26,14 @@ export class FormCategoryComponent implements OnInit {
 
     pictureFile! : File;
 
+
+
     constructor(public categoryService : CategoryService,
 		public imageService: ImageService,
 		public route : ActivatedRoute,
-		public router: Router
+		public router: Router,
+		public dialog: MatDialog,
+		public _location : Location
 	       ) {
 	const category_id= route.snapshot.paramMap.get("id");
 	if(category_id){
@@ -63,14 +71,14 @@ export class FormCategoryComponent implements OnInit {
 	this.pictureFile = file;
     }
 
-    onSubmitButton(){
-
-		//file: this.pictureFile,
+    submit(){
 	if(this.editMode && this.category._id){
 	    this.categoryService.update(this.pictureFile, {
 		...this.category
 	    }).subscribe( result => {
-		console.log("Update success");
+		console.log("Update success", result);		
+		//this.router.navigate(["category", ], {replaceUrl: true});
+		this._location.back();
 	    }, fail => {
 		var errorMsg = "Failed to change category";
 		if(fail.error){
@@ -88,11 +96,36 @@ export class FormCategoryComponent implements OnInit {
 		name: this.category.name,
 		file: this.pictureFile
 	    }).subscribe( result => {
-		console.log("Result", result);
-	    }, err => {
-		console.log("error", err);
+		this.router.navigate(["category", result.category_id], {replaceUrl: true});
+	    }, fail => {
+		var errorMsg = "Failed to create category";
+
+		if(fail.error){
+		    const code = fail.error.error.code;
+		    if(code == "ER_DUP_ENTRY"){
+			errorMsg = `A brand with name ${this.category.name} already exists`;
+		    }
+		}
+		alert(errorMsg);
+	    }, () => {
 	    });
 	}
+    }
+    
+    onSubmitButton(){
+
+	const dialogRef = this.dialog.open(DialogConfirmComponent, {
+	    data: {
+		title: "Please confirm",
+		msg: `Please press confirm to ${this.submitButtonLabel.toLowerCase()} category.`		
+	    }
+	});
+
+	dialogRef.afterClosed().subscribe(result => {
+	    if(result)
+		this.submit();
+	});
+	//file: this.pictureFile,
     }
     
 }

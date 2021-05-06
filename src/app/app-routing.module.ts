@@ -42,8 +42,8 @@ const authenticated_routes: Routes = [
     {path: "brand/:id/edit", component: FormBrandComponent},
     {path: "products", component: ListProductsComponent},
     {path: "product", component: ListProductsComponent},
-    {path: "product/:id", component: ProductComponent},
     {path: "product/new", component: FormProductComponent},
+    {path: "product/:id", component: ProductComponent},
     {path: "product/:id/edit", component: FormProductComponent},
     {path: "newsletters", component: ManageNewsLetterComponent},
     {path: "recipes", component: ManageRecipesComponent}    

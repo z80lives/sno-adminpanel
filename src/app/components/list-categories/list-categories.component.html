@@ -6,7 +6,13 @@
   <mat-card-content>
     <p *ngIf="isLoading">Loading..</p>
 
-    <div *ngIf="!isLoading">
+
+    <mat-form-field>
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Coca .." #input>
+    </mat-form-field>
+    
+    <div *ngIf="!isLoading" class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" >
 
       <!--name column -->
@@ -24,6 +30,23 @@
 	</td>
       </ng-container>
 
+
+      <!--file exists column -->
+      <ng-container matColumnDef="fileExists">
+	<th mat-header-cell
+	    *matHeaderCellDef
+	    >
+	  Image Working
+	</th>
+	<td mat-cell
+	    *matCellDef="let category">
+	  <mat-icon *ngIf="category.fileExists"
+		    style="color:green;">check</mat-icon>
+	  <mat-icon *ngIf="!category.fileExists"
+	    style="color:red;">close</mat-icon>
+	</td>
+      </ng-container>
+
       <tr mat-header-row *matHeaderRowDef="displayed_columns"></tr>      
       <tr mat-row *matRowDef="let row; columns: displayed_columns;"></tr>
 
@@ -32,6 +55,9 @@
       </tr>
     </table>
     </div> 
+
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>   
 
     <!--add button -->
     <button mat-fab class="fab-bottom-right" (click)="onClickAdd()">

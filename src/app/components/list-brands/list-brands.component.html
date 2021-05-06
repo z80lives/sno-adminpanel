@@ -4,14 +4,28 @@
   </mat-card-header>
 
   <mat-card-content>
+
+
+    <mat-form-field>
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Drinks" #input>
+    </mat-form-field>
+    
     <p *ngIf="isLoading">Loading..</p>
 
-    <table *ngIf="!isLoading" mat-table [dataSource]="dataSource" >
+    
+    <div
+      class="mat-elevation-z8"
+      > 
+      <table
+	matSort
+      *ngIf="!isLoading" mat-table [dataSource]="dataSource" >
 
       <!--name column -->
       <ng-container matColumnDef="name">
 	<th mat-header-cell
 	    *matHeaderCellDef
+	    mat-sort-header
 	    >
 	  Name
 	</th>
@@ -26,7 +40,9 @@
       <!--origin column --> 
       <ng-container matColumnDef="origin">
 	<th mat-header-cell
-	    *matHeaderCellDef>
+	    *matHeaderCellDef
+	    mat-sort-header
+	    >
 	  Origin
 	</th>
 	<td mat-cell *matCellDef="let brand">
@@ -43,11 +59,14 @@
       </tr>
     </table>
 
+    </div>
+    
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>   
+    
+  </mat-card-content>
 
     <!--add button -->
     <button mat-fab class="fab-bottom-right" (click)="onClickAdd()">
       <mat-icon>add</mat-icon>
     </button>
-    
-  </mat-card-content>
 </mat-card>

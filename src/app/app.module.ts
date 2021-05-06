@@ -15,13 +15,17 @@ import { RefreshTokenInterceptorInterceptor } from "./refresh-token-interceptor.
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
+import {MatDialogModule} from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableModule} from '@angular/material/table';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSelectModule} from '@angular/material/select';
+import {MatSortModule} from '@angular/material/sort';
 import {MatSidenavModule} from '@angular/material/sidenav';
 
 //other modules
@@ -56,6 +60,7 @@ import { ProductComponent } from './components/product/product.component';
 import { FormProductComponent } from './components/form-product/form-product.component';
 import { FilterSelectComponent } from './components/filter-select/filter-select.component';
 import { AlertBoxComponent } from './components/alert-box/alert-box.component';
+import { DialogConfirmComponent } from './components/dialog-confirm/dialog-confirm.component';
 
 
 @NgModule({
@@ -82,7 +87,8 @@ import { AlertBoxComponent } from './components/alert-box/alert-box.component';
       ProductComponent,
       FormProductComponent,
       FilterSelectComponent,
-      AlertBoxComponent      
+      AlertBoxComponent,
+      DialogConfirmComponent      
   ],
   imports: [
       AppRoutingModule,
@@ -104,13 +110,17 @@ import { AlertBoxComponent } from './components/alert-box/alert-box.component';
       MatAutocompleteModule,
       MatButtonModule,
       MatCardModule,
+      MatDialogModule,
       MatFormFieldModule,
       MatIconModule,
       MatInputModule,
       MatMenuModule,
+      MatPaginatorModule,
       MatSidenavModule,
       MatTableModule,
       MatToolbarModule,
+      MatTooltipModule,
+      MatSortModule,
       MatSelectModule,
 
       NgxMatSelectSearchModule,

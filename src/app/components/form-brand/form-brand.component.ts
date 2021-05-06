@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { NgForm } from "@angular/forms";
 import { Brand } from "../../models/brand";
 import { BrandService } from "../../services/brand.service";
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-form-brand',
@@ -22,7 +23,8 @@ export class FormBrandComponent implements OnInit {
 
     constructor(public brandService : BrandService,
 		public route : ActivatedRoute,
-		public router: Router
+		public router: Router,
+		public _location : Location
 	       ) {
 	const brand_id= route.snapshot.paramMap.get("id");
 	if(brand_id){
@@ -58,8 +60,7 @@ export class FormBrandComponent implements OnInit {
 	    this.brandService.update({
 		...this.brand
 	    }).subscribe( result => {
-		console.log("Update success");
-		
+		this._location.back();
 	    }, fail => {
 		var errorMsg = "Failed to change brand";
 		if(fail.error){
@@ -77,9 +78,16 @@ export class FormBrandComponent implements OnInit {
 		name: this.brand.name,
 		origin: this.brand.origin
 	    }).subscribe( result => {
-		console.log("Result", result);
-	    }, err => {
-		console.log("error", err);
+		this.router.navigate(["brand", result._id], {replaceUrl: true});
+	    }, fail => {
+		var errorMsg = "Failed to create brand";
+		const code = fail.error.error.code
+		if(fail.error){
+		    if(code == "ER_DUP_ENTRY"){
+			errorMsg = `A brand with name ${this.brand.name} already exists`;
+		    }
+		}
+		alert(errorMsg);
 	    });
 	}
     }

@@ -1,0 +1,23 @@
+mat-card{
+    margin: 0.2em;
+}
+
+.fab-bottom-right{
+    position: fixed;
+    left: auto;
+    right: 2em;
+    bottom: 10px;
+}
+
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td, th {
+  width: 25%;
+}

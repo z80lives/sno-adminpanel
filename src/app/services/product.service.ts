@@ -4,6 +4,8 @@ import { Product } from "../models/product";
 
 import { Image, ImageService, ImageUpload } from "./image.service";
 
+import { Observable } from "rxjs";
+
 interface ProductList{
     message: string;
     data: Product[];
@@ -26,6 +28,13 @@ interface ProductData{
     category?: string;
 }
 
+interface ProductCreateQuery{
+    message: string;
+    data: {
+	_id: string;
+    }
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -38,28 +47,32 @@ export class ProductService {
 	       ) { }
 
     fetchAll() {
-	return this.http.get<ProductList>("/api/product");
+	return this.http.get<ProductList>("/api/admin/product?checkFileExists=true&populate=true");
     }
 
 
-    create(data : ProductData){
-	const {name, file, packaging} = data;
+    create(data : ProductData) : Observable<any>  {
+	const {name, file,
+	       packaging,
+	       brand,
+	       category
+	      } = data;
 
 	const procResult =  (result: ImageUpload) => {
-	    return this.http.post("/api/admin/product", {
+	    return this.http.post<ProductCreateQuery>("/api/admin/product", {
 		name,
+		brand,
+		category, 
 		packaging,
-		picture: {
-		    _id: result.data._id
-		}
+		pic: result.data._id		
 	    });
 	};
 		      
 	
-	return this.imageService.afterUpload(file, procResult);
+	return this.imageService.afterUpload(file, procResult, null, "product");
     }
     
-    update(file: File | undefined, data : ProductData ) {
+    update(file: File | undefined, data : ProductData ) : Observable<any> {
 	const {_id} = data;
 	
 	const procResult = () => {
@@ -70,7 +83,7 @@ export class ProductService {
 	const pic_id = data.picture? data.picture._id : "";
 
 	if(file !== undefined){
-	    return this.imageService.afterUpload(file, procResult, pic_id);
+	    return this.imageService.afterUpload(file, procResult, pic_id, "product");
 	}else{
 	    return procResult();
 	}
@@ -79,5 +92,6 @@ export class ProductService {
     fetch(_id: string){
 	return this.http.get<ProductQuery>("/api/product/"+_id+"?populate=true");
     }
+
 
 }
